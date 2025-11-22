@@ -335,6 +335,18 @@
       color: var(--muted);
     }
 
+    /* заметная кнопка доната */
+    .btn-donate {
+      border-color: rgba(255, 39, 70, 0.9);
+      background: radial-gradient(circle at 0 0, rgba(255, 39, 70, 0.3), transparent 55%);
+      color: #ffb3c4;
+      box-shadow: 0 0 26px rgba(255, 39, 70, 0.8);
+    }
+    .btn-donate:hover {
+      background: radial-gradient(circle at 0 0, rgba(255, 39, 70, 0.5), transparent 60%);
+      color: #ffffff;
+    }
+
     .btn svg {
       width: 16px;
       height: 16px;
@@ -811,6 +823,21 @@
       border-bottom: 1px dashed rgba(255, 255, 255, 0.3);
     }
 
+    /* заметная ссылка доната */
+    .footer-donate {
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 0 0, rgba(255, 39, 70, 0.4), transparent 60%);
+      border-bottom: none;
+      border: 1px solid rgba(255, 39, 70, 0.9);
+      color: #ffe4ec !important;
+      font-weight: 600;
+    }
+    .footer-donate:hover {
+      background: radial-gradient(circle at 0 0, rgba(255, 39, 70, 0.7), transparent 65%);
+      color: #ffffff !important;
+    }
+
     .footer-bottom {
       margin-top: 10px;
       display: flex;
@@ -1057,6 +1084,14 @@
               <path d="M5 4h14v10l-4 4h-4l-2 2v-2H5zM10 8v4M14 8v4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
             <span>Смотреть стрим</span>
+          </a>
+
+          <!-- заметная кнопка доната -->
+          <a href="https://donatello.to/knutoboyyy" target="_blank" rel="noreferrer" class="btn btn-donate">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 21s-6-4.35-9-9A5 5 0 0112 5a5 5 0 019 7c-3 4.65-9 9-9 9z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <span>Донат (Украина)</span>
           </a>
         </div>
 
@@ -1337,6 +1372,23 @@
           </div>
         </article>
 
+        <!-- НОВАЯ НОМИНАЦИЯ: ПРОЕКТ ГОДА -->
+        <article class="nom-card">
+          <div class="nom-overlay-glow"></div>
+          <div class="nom-tag">Движ</div>
+          <div class="nom-title">Проект года</div>
+          <div class="nom-desc">
+            Лучший проект, сделанный людьми с сервера: ивент, мини-игра, сервер, контент,
+            любой движ, который стал частью истории комьюнити.
+          </div>
+          <div class="nom-foot">
+            <div>Опиши проект или дай ссылку</div>
+            <div class="nom-actions">
+              <button class="primary" onclick="openVote('Проект года')">Голосовать</button>
+            </div>
+          </div>
+        </article>
+
         <article class="nom-card">
           <div class="nom-overlay-glow"></div>
           <div class="nom-tag">Событие</div>
@@ -1422,7 +1474,7 @@
       <div>
         <div class="footer-links">
           <a href="https://discord.gg/NX2JjE7abg" target="_blank" rel="noreferrer">Discord сервер</a>
-          <a href="https://donatello.to/knutoboyyy" target="_blank" rel="noreferrer">Донат (Украина)</a>
+          <a href="https://donatello.to/knutoboyyy" target="_blank" rel="noreferrer" class="footer-donate">Донат (Украина)</a>
           <a href="#">Политика конфиденциальности</a>
           <a href="#">Правила премии</a>
           <a href="#top">Наверх</a>
