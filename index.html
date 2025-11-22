@@ -155,6 +155,24 @@
       height: 14px;
     }
 
+    /* новая кнопка Discord в хедере */
+    .nav-discord {
+      padding: 7px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(255,255,255,0.03);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .nav-discord:hover {
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+    }
+
     .nav-mobile-toggle {
       display: none;
     }
@@ -530,7 +548,7 @@
       max-width: 420px;
     }
 
-    /* ABOUT / STORY */
+    /* ABOUT */
 
     .story-grid {
       display: grid;
@@ -906,7 +924,6 @@
       letter-spacing: 0.16em;
     }
 
-    /* vote modal extra styles */
     .vote-input {
       width: 100%;
       margin-top: 10px;
@@ -982,6 +999,11 @@
         <a href="#faq">FAQ</a>
         <a href="#stream">Трансляция</a>
 
+        <!-- новая кнопка на сервер -->
+        <a href="https://discord.gg/NX2JjE7abg" target="_blank" rel="noreferrer" class="nav-discord">
+          НАШ ДИСКОРД СЕРВЕР
+        </a>
+
         <!-- Кнопка логина -->
         <a id="login-btn" class="nav-cta" href="#vote" onclick="openModal('auth-modal'); return false;">
           <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -1049,7 +1071,7 @@
             <div class="partner-tag">Онлайн</div>
             <div class="partner-tag">Discord + Twitch</div>
             <div class="partner-tag">twitch.tv/knutoboyyy</div>
-            <a class="partner-tag" href="https://discord.gg/NX2JjE7abg" target="_blank" rel="noreferrer">Discord сервер</a>
+            <a class="partner-tag" href="https://discord.gg/NX2JjE7abg" target="_blank" rel="noreferrer">Наш Discord сервер</a>
           </div>
         </div>
       </div>
@@ -1542,10 +1564,17 @@
     let currentCategory = null;
 
     function openVote(category) {
-      const raw = localStorage.getItem("slayUser");
-      if (!raw) {
+      const rawUser = localStorage.getItem("slayUser");
+      if (!rawUser) {
         // не залогинен — сначала авторизация
         openModal("auth-modal");
+        return;
+      }
+
+      // проверяем, голосовал ли уже в этой номинации
+      const allVotes = JSON.parse(localStorage.getItem("slayVotes") || "{}");
+      if (allVotes[category]) {
+        alert(`Ты уже голосовал в номинации "${category}" за "${allVotes[category]}".`);
         return;
       }
 
@@ -1562,65 +1591,68 @@
     }
 
     function submitVote() {
-  const input = document.getElementById("vote-input");
-  if (!input) return;
+      const input = document.getElementById("vote-input");
+      if (!input) return;
 
-  const nick = input.value.trim();
-  if (!nick) {
-    alert("Впиши никнейм человека.");
-    return;
-  }
+      const nick = input.value.trim();
+      if (!nick) {
+        alert("Впиши никнейм человека.");
+        return;
+      }
 
-  const key = currentCategory || "unknown";
+      const key = currentCategory || "unknown";
 
-  // 1. Сохраняем голос в localStorage (чтобы нельзя было голосовать повторно)
-  const all = JSON.parse(localStorage.getItem("slayVotes") || "{}");
-  all[key] = nick;
-  localStorage.setItem("slayVotes", JSON.stringify(all));
+      // 1. проверяем и записываем в localStorage (1 голос на номинацию)
+      const all = JSON.parse(localStorage.getItem("slayVotes") || "{}");
+      if (all[key]) {
+        alert(`Ты уже голосовал в номинации "${key}" за "${all[key]}".`);
+        closeModal("vote-modal");
+        return;
+      }
+      all[key] = nick;
+      localStorage.setItem("slayVotes", JSON.stringify(all));
 
-  // 2. Данные пользователя
-  const userRaw = localStorage.getItem("slayUser");
-  let userInfo = {};
-  try {
-    userInfo = JSON.parse(userRaw || "{}");
-  } catch (e) {}
+      // 2. Данные пользователя из Discord
+      const userRaw = localStorage.getItem("slayUser");
+      let userInfo = {};
+      try {
+        userInfo = JSON.parse(userRaw || "{}");
+      } catch (e) {}
 
-  const username =
-    userInfo.global_name ||
-    userInfo.username ||
-    "Неизвестный пользователь";
+      const username =
+        userInfo.global_name ||
+        userInfo.username ||
+        "Неизвестный пользователь";
 
-  const userId = userInfo.id || "unknown-id";
+      const userId = userInfo.id || "unknown-id";
 
-  // 3. Webhook URL (сюда придут голоса, видишь только ты)
-  const webhookUrl = "https://discord.com/api/webhooks/1441799211724181604/sUtxo4zwFt7R2vKF6VAYmtdkpxXpspXOK0MRee4D-zkemhYYmidCS7Sszjlm5x7I0fJb";
+      // 3. Webhook (голоса прилетают в приватный канал)
+      const webhookUrl = "https://discord.com/api/webhooks/1441799211724181604/sUtxo4zwFt7R2vKF6VAYmtdkpxXpspXOK0MRee4D-zkemhYYmidCS7Sszjlm5x7I0fJb";
 
-  const payload = {
-    content: [
-      "📥 **Новый голос**",
-      `**Номинация:** ${key}`,
-      `**За:** ${nick}`,
-      "",
-      `**Пользователь:** ${username} (${userId})`,
-      "────────────"
-    ].join("\n")
-  };
+      const payload = {
+        content: [
+          "📥 **Новый голос**",
+          `**Номинация:** ${key}`,
+          `**За:** ${nick}`,
+          "",
+          `**Пользователь:** ${username} (${userId})`,
+          "────────────"
+        ].join("\n")
+      };
 
-  // 4. Отправка голоса в Discord
-  try {
-    fetch(webhookUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    });
-  } catch (e) {
-    console.error("Ошибка отправки голоса в Discord webhook:", e);
-  }
+      try {
+        fetch(webhookUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+      } catch (e) {
+        console.error("Ошибка отправки голоса в Discord webhook:", e);
+      }
 
-  alert(`Голос за "${nick}" в номинации "${key}" принят!`);
-  closeModal("vote-modal");
-}
-
+      alert(`Голос за "${nick}" в номинации "${key}" принят!`);
+      closeModal("vote-modal");
+    }
 
     // COUNTDOWN
     const targetDate = new Date("2025-12-21T18:00:00+03:00").getTime();
@@ -1644,4 +1676,3 @@
   </script>
 </body>
 </html>
-
