@@ -1562,20 +1562,65 @@
     }
 
     function submitVote() {
-      const input = document.getElementById("vote-input");
-      if (!input) return;
-      const nick = input.value.trim();
-      if (!nick) {
-        alert("Впиши никнейм человека.");
-        return;
-      }
-      const all = JSON.parse(localStorage.getItem("slayVotes") || "{}");
-      const key = currentCategory || "unknown";
-      all[key] = nick;
-      localStorage.setItem("slayVotes", JSON.stringify(all));
-      alert(`Голос за "${nick}" в номинации "${key}" сохранён в этом браузере.\nПотом это можно будет выгрузить модерам или на сервер.`);
-      closeModal("vote-modal");
-    }
+  const input = document.getElementById("vote-input");
+  if (!input) return;
+
+  const nick = input.value.trim();
+  if (!nick) {
+    alert("Впиши никнейм человека.");
+    return;
+  }
+
+  const key = currentCategory || "unknown";
+
+  // 1. Сохраняем голос в localStorage (чтобы нельзя было голосовать повторно)
+  const all = JSON.parse(localStorage.getItem("slayVotes") || "{}");
+  all[key] = nick;
+  localStorage.setItem("slayVotes", JSON.stringify(all));
+
+  // 2. Данные пользователя
+  const userRaw = localStorage.getItem("slayUser");
+  let userInfo = {};
+  try {
+    userInfo = JSON.parse(userRaw || "{}");
+  } catch (e) {}
+
+  const username =
+    userInfo.global_name ||
+    userInfo.username ||
+    "Неизвестный пользователь";
+
+  const userId = userInfo.id || "unknown-id";
+
+  // 3. Webhook URL (сюда придут голоса, видишь только ты)
+  const webhookUrl = "https://discord.com/api/webhooks/1441799211724181604/sUtxo4zwFt7R2vKF6VAYmtdkpxXpspXOK0MRee4D-zkemhYYmidCS7Sszjlm5x7I0fJb";
+
+  const payload = {
+    content: [
+      "📥 **Новый голос**",
+      `**Номинация:** ${key}`,
+      `**За:** ${nick}`,
+      "",
+      `**Пользователь:** ${username} (${userId})`,
+      "────────────"
+    ].join("\n")
+  };
+
+  // 4. Отправка голоса в Discord
+  try {
+    fetch(webhookUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+  } catch (e) {
+    console.error("Ошибка отправки голоса в Discord webhook:", e);
+  }
+
+  alert(`Голос за "${nick}" в номинации "${key}" принят!`);
+  closeModal("vote-modal");
+}
+
 
     // COUNTDOWN
     const targetDate = new Date("2025-12-21T18:00:00+03:00").getTime();
@@ -1599,3 +1644,4 @@
   </script>
 </body>
 </html>
+
