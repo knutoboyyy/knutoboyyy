@@ -8,9 +8,9 @@
     :root {
       --bg: #050307;
       --bg-alt: #0b0509;
-      --accent: #ff2746;        /* основной красный */
+      --accent: #ff2746;
       --accent-soft: rgba(255, 39, 70, 0.18);
-      --accent-2: #ff7a5c;      /* второй красно-оранжевый */
+      --accent-2: #ff7a5c;
       --text: #f5f5f5;
       --muted: #9a96a5;
       --border: #2a151d;
@@ -587,57 +587,6 @@
       pointer-events: none;
     }
 
-    .nom-person-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 6px;
-    }
-
-    .nom-person {
-      flex: 1 1 45%;
-      min-width: 120px;
-      display: flex;
-      gap: 8px;
-      padding: 6px 8px;
-      border-radius: 12px;
-      background: rgba(7, 2, 5, 0.95);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      align-items: center;
-    }
-
-    .nom-person-avatar {
-      width: 32px;
-      height: 32px;
-      border-radius: 999px;
-      overflow: hidden;
-      flex-shrink: 0;
-      border: 2px solid rgba(255, 39, 70, 0.6);
-    }
-
-    .nom-person-avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .nom-person-main {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .nom-person-name {
-      font-size: 12px;
-      font-weight: 600;
-    }
-
-    .nom-person-tag {
-      font-size: 11px;
-      color: var(--muted);
-    }
-
     .nom-foot {
       display: flex;
       justify-content: space-between;
@@ -1110,16 +1059,15 @@
     <section class="section" id="noms">
       <div class="section-header">
         <div>
-          <h2 class="section-title">Номинации и участники</h2>
+          <h2 class="section-title">Номинации</h2>
           <p class="section-sub">
-            Вот категории премии. В каждой — люди с сервера, за которых можно голосовать
-            после входа через Discord. Фотки — это их аватарки или любые картинки, которые ты поставишь.
+            После входа через Discord ты сможешь голосовать за людей с сервера
+            в каждой из этих категорий.
           </p>
         </div>
       </div>
 
       <div class="nominations-grid">
-        <!-- SLAY KING -->
         <article class="nom-card">
           <div class="nom-overlay-glow"></div>
           <div class="nom-tag">Персона</div>
@@ -1127,38 +1075,14 @@
           <div class="nom-desc">
             Самый яркий участник сервера: харизма, актив, движ, мемы, поддержка — всё в одном.
           </div>
-          <div class="nom-person-grid">
-            <!-- ЗДЕСЬ МЕНЯЕШЬ ФОТО -->
-            <div class="nom-person">
-              <div class="nom-person-avatar">
-                <img src="img/king1.jpg" alt="SLAY KING 1">
-              </div>
-              <div class="nom-person-main">
-                <div class="nom-person-name">Username#0001</div>
-                <div class="nom-person-tag">актив в войсах</div>
-              </div>
-            </div>
-
-            <div class="nom-person">
-              <div class="nom-person-avatar">
-                <img src="img/king2.jpg" alt="SLAY KING 2">
-              </div>
-              <div class="nom-person-main">
-                <div class="nom-person-name">Username#0002</div>
-                <div class="nom-person-tag">вечно на стриме</div>
-              </div>
-            </div>
-          </div>
           <div class="nom-foot">
             <div>Выбери одного SLAY KING</div>
             <div class="nom-actions">
               <button class="primary" onclick="openModal('auth-modal')">Голосовать</button>
-              <button onclick="openModal('suggest-modal')">Добавить</button>
             </div>
           </div>
         </article>
 
-        <!-- SLAY QUEEN -->
         <article class="nom-card">
           <div class="nom-overlay-glow"></div>
           <div class="nom-tag">Персона</div>
@@ -1166,36 +1090,14 @@
           <div class="nom-desc">
             Девушка сервера, которая тащит атмосферу, чат и настроения всех вокруг.
           </div>
-          <div class="nom-person-grid">
-            <div class="nom-person">
-              <div class="nom-person-avatar">
-                <img src="img/queen1.jpg" alt="SLAY QUEEN 1">
-              </div>
-              <div class="nom-person-main">
-                <div class="nom-person-name">Username#1001</div>
-                <div class="nom-person-tag">главный вайб</div>
-              </div>
-            </div>
-            <div class="nom-person">
-              <div class="nom-person-avatar">
-                <img src="img/queen2.jpg" alt="SLAY QUEEN 2">
-              </div>
-              <div class="nom-person-main">
-                <div class="nom-person-name">Username#1002</div>
-                <div class="nom-person-tag">весёлый токсик</div>
-              </div>
-            </div>
-          </div>
           <div class="nom-foot">
             <div>Один голос в сутки</div>
             <div class="nom-actions">
               <button class="primary" onclick="openModal('auth-modal')">Голосовать</button>
-              <button onclick="openModal('suggest-modal')">Добавить</button>
             </div>
           </div>
         </article>
 
-        <!-- Прорыв года -->
         <article class="nom-card">
           <div class="nom-overlay-glow"></div>
           <div class="nom-tag">Персона</div>
@@ -1203,27 +1105,14 @@
           <div class="nom-desc">
             Тот, кто недавно появился на сервере и уже везде: в чатах, конфах и мемах.
           </div>
-          <div class="nom-person-grid">
-            <div class="nom-person">
-              <div class="nom-person-avatar">
-                <img src="img/break1.jpg" alt="Прорыв года 1">
-              </div>
-              <div class="nom-person-main">
-                <div class="nom-person-name">NewUser#0003</div>
-                <div class="nom-person-tag">залетел и остался</div>
-              </div>
-            </div>
-          </div>
           <div class="nom-foot">
             <div>Только новые лица</div>
             <div class="nom-actions">
               <button class="primary" onclick="openModal('auth-modal')">Голосовать</button>
-              <button onclick="openModal('suggest-modal')">Добавить</button>
             </div>
           </div>
         </article>
 
-        <!-- Конфликт года -->
         <article class="nom-card">
           <div class="nom-overlay-glow"></div>
           <div class="nom-tag">Движ</div>
@@ -1231,26 +1120,14 @@
           <div class="nom-desc">
             Самый громкий спор/драма сервера, про который ещё долго шутили в войсах.
           </div>
-          <div class="nom-person-grid">
-            <div class="nom-person">
-              <div class="nom-person-avatar">
-                <img src="img/conflict1.jpg" alt="Конфликт">
-              </div>
-              <div class="nom-person-main">
-                <div class="nom-person-name">UserA vs UserB</div>
-                <div class="nom-person-tag">легендарный холивар</div>
-              </div>
-            </div>
-          </div>
           <div class="nom-foot">
-            <div>Выбери главный конфликт</div>
+            <div>Главный холивар года</div>
             <div class="nom-actions">
-              <button class="primary" onclick="openModal('suggest-track-modal')">Предложить момент</button>
+              <button class="primary" onclick="openModal('auth-modal')">Голосовать</button>
             </div>
           </div>
         </article>
 
-        <!-- CS2 игрок года -->
         <article class="nom-card">
           <div class="nom-overlay-glow"></div>
           <div class="nom-tag">Игры</div>
@@ -1258,27 +1135,14 @@
           <div class="nom-desc">
             Тот, кто разваливает лобби, тащит катки и собирает клипы с сервера.
           </div>
-          <div class="nom-person-grid">
-            <div class="nom-person">
-              <div class="nom-person-avatar">
-                <img src="img/cs1.jpg" alt="CS2 игрок">
-              </div>
-              <div class="nom-person-main">
-                <div class="nom-person-name">CSUser#1337</div>
-                <div class="nom-person-tag">эйс за эйсом</div>
-              </div>
-            </div>
-          </div>
           <div class="nom-foot">
             <div>Только участники сервера</div>
             <div class="nom-actions">
               <button class="primary" onclick="openModal('auth-modal')">Голосовать</button>
-              <button onclick="openModal('suggest-modal')">Добавить</button>
             </div>
           </div>
         </article>
 
-        <!-- Dota2 игрок года -->
         <article class="nom-card">
           <div class="nom-overlay-glow"></div>
           <div class="nom-tag">Игры</div>
@@ -1286,27 +1150,14 @@
           <div class="nom-desc">
             Любимый керри, саппорт или тот самый мидер, который всегда «знает как надо».
           </div>
-          <div class="nom-person-grid">
-            <div class="nom-person">
-              <div class="nom-person-avatar">
-                <img src="img/dota1.jpg" alt="Dota2 игрок">
-              </div>
-              <div class="nom-person-main">
-                <div class="nom-person-name">DotaUser#228</div>
-                <div class="nom-person-tag">мут, но тащит</div>
-              </div>
-            </div>
-          </div>
           <div class="nom-foot">
             <div>Выбери одного игрока</div>
             <div class="nom-actions">
               <button class="primary" onclick="openModal('auth-modal')">Голосовать</button>
-              <button onclick="openModal('suggest-modal')">Добавить</button>
             </div>
           </div>
         </article>
 
-        <!-- Мем года -->
         <article class="nom-card">
           <div class="nom-overlay-glow"></div>
           <div class="nom-tag">Мем</div>
@@ -1314,26 +1165,14 @@
           <div class="nom-desc">
             Фраза, картинка или момент, который остался внутри сервера навсегда.
           </div>
-          <div class="nom-person-grid">
-            <div class="nom-person">
-              <div class="nom-person-avatar">
-                <img src="img/meme1.jpg" alt="Мем года">
-              </div>
-              <div class="nom-person-main">
-                <div class="nom-person-name">«Это шутка?»</div>
-                <div class="nom-person-tag">локальный мем</div>
-              </div>
-            </div>
-          </div>
           <div class="nom-foot">
-            <div>Прикрепляй скрины/клипы</div>
+            <div>Прикрепляй скрины/клипы (позже)</div>
             <div class="nom-actions">
-              <button class="primary" onclick="openModal('suggest-track-modal')">Предложить</button>
+              <button class="primary" onclick="openModal('auth-modal')">Голосовать</button>
             </div>
           </div>
         </article>
 
-        <!-- Трек года -->
         <article class="nom-card">
           <div class="nom-overlay-glow"></div>
           <div class="nom-tag">Музыка</div>
@@ -1341,26 +1180,14 @@
           <div class="nom-desc">
             Песня, под которую жили войсы, мемили и делали хайлайты.
           </div>
-          <div class="nom-person-grid">
-            <div class="nom-person">
-              <div class="nom-person-avatar">
-                <img src="img/track1.jpg" alt="Трек года">
-              </div>
-              <div class="nom-person-main">
-                <div class="nom-person-name">Название трека</div>
-                <div class="nom-person-tag">линк на YouTube/Spotify</div>
-              </div>
-            </div>
-          </div>
           <div class="nom-foot">
             <div>Нужна ссылка на трек</div>
             <div class="nom-actions">
-              <button class="primary" onclick="openModal('suggest-track-modal')">Предложить</button>
+              <button class="primary" onclick="openModal('auth-modal')">Голосовать</button>
             </div>
           </div>
         </article>
 
-        <!-- Событие года -->
         <article class="nom-card">
           <div class="nom-overlay-glow"></div>
           <div class="nom-tag">Событие</div>
@@ -1369,21 +1196,10 @@
             Турнир, совместный просмотр, рейд, марафон — любой момент, который
             стал историей сервера.
           </div>
-          <div class="nom-person-grid">
-            <div class="nom-person">
-              <div class="nom-person-avatar">
-                <img src="img/event1.jpg" alt="Событие года">
-              </div>
-              <div class="nom-person-main">
-                <div class="nom-person-name">Название события</div>
-                <div class="nom-person-tag">дата/описание</div>
-              </div>
-            </div>
-          </div>
           <div class="nom-foot">
             <div>Прикрепи инфу/клип</div>
             <div class="nom-actions">
-              <button class="primary" onclick="openModal('suggest-track-modal')">Предложить</button>
+              <button class="primary" onclick="openModal('auth-modal')">Голосовать</button>
             </div>
           </div>
         </article>
@@ -1402,21 +1218,6 @@
       </div>
 
       <div class="faq-list">
-        <div class="faq-item">
-          <div class="faq-header" onclick="toggleFaq(this)">
-            <div class="faq-question">Как добавить фотку участника?</div>
-            <div class="faq-toggle-icon">+</div>
-          </div>
-          <div class="faq-body">
-            <div class="faq-body-inner">
-              Создаёшь папку <code>img</code> рядом с <code>index.html</code>, кладёшь туда
-              картинку, например <code>denis.jpg</code> и в коде меняешь
-              <code>src="img/king1.jpg"</code> на <code>src="img/denis.jpg"</code>.
-              Имя и описание участника тоже правишь прямо в HTML.
-            </div>
-          </div>
-        </div>
-
         <div class="faq-item">
           <div class="faq-header" onclick="toggleFaq(this)">
             <div class="faq-question">Зачем авторизация через Discord?</div>
@@ -1493,8 +1294,7 @@
       <div class="modal-body">
         Чтобы голосовать за участников, нужно подключить свой Discord аккаунт.
         <div class="auth-options">
-          <!-- Сюда потом вставишь реальную Discord OAuth ссылку -->
-          <button class="auth-btn" onclick="fakeVote()">
+          <button class="auth-btn" onclick="loginDiscord()">
             <span>Продолжить через Discord</span>
             <span>→</span>
           </button>
@@ -1503,19 +1303,6 @@
           Продолжая, ты подтверждаешь согласие на обработку данных и принимаешь
           правила премии.
         </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal-backdrop" id="success-modal">
-    <div class="modal">
-      <div class="modal-header">
-        <div class="modal-title">Голос учтён</div>
-        <button class="modal-close" onclick="closeModal('success-modal')">×</button>
-      </div>
-      <div class="modal-body">
-        Спасибо за голос! В финале на <strong>twitch.tv/knutoboyyy</strong>
-        узнаешь, кого выбрал сервер.
       </div>
     </div>
   </div>
@@ -1538,48 +1325,6 @@
     </div>
   </div>
 
-  <div class="modal-backdrop" id="suggest-modal">
-    <div class="modal">
-      <div class="modal-header">
-        <div class="modal-title">Предложить участника</div>
-        <button class="modal-close" onclick="closeModal('suggest-modal')">×</button>
-      </div>
-      <div class="modal-body">
-        Напиши ник и категорию, в которой хочешь его видеть.
-        <div style="margin-top:10px;">
-          <input type="text" placeholder="Ник участника (Discord)" style="width:100%; padding:8px 10px; border-radius:12px; border:1px solid rgba(255,255,255,0.16); background:#050307; color:#fff; font-size:13px; margin-bottom:8px;" />
-          <input type="text" placeholder="Категория (например, SLAY KING)" style="width:100%; padding:8px 10px; border-radius:12px; border:1px solid rgba(255,255,255,0.16); background:#050307; color:#fff; font-size:13px;" />
-        </div>
-        <div class="modal-actions">
-          <button class="btn btn-primary" onclick="closeModal('suggest-modal'); openModal('success-modal');">
-            Отправить
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal-backdrop" id="suggest-track-modal">
-    <div class="modal">
-      <div class="modal-header">
-        <div class="modal-title">Предложить мем / трек / событие</div>
-        <button class="modal-close" onclick="closeModal('suggest-track-modal')">×</button>
-      </div>
-      <div class="modal-body">
-        Вставь ссылку на клип, мем, трек или описание события, которое должно
-        войти в историю сервера.
-        <div style="margin-top:10px;">
-          <input type="text" placeholder="Ссылка или описание" style="width:100%; padding:8px 10px; border-radius:12px; border:1px solid rgba(255,255,255,0.16); background:#050307; color:#fff; font-size:13px;" />
-        </div>
-        <div class="modal-actions">
-          <button class="btn btn-primary" onclick="closeModal('suggest-track-modal'); openModal('success-modal');">
-            Отправить
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <script>
     function toggleMobileNav() {
       const header = document.querySelector(".header");
@@ -1594,12 +1339,6 @@
       document.getElementById(id)?.classList.remove("open");
     }
 
-    function fakeVote() {
-      // сюда потом ставишь реальный редирект на Discord OAuth
-      closeModal("auth-modal");
-      openModal("success-modal");
-    }
-
     function toggleFaq(headerEl) {
       const item = headerEl.closest(".faq-item");
       const open = item.classList.contains("open");
@@ -1609,7 +1348,24 @@
       if (!open) item.classList.add("open");
     }
 
-    // Обратный отсчёт до даты номинации
+    // ВХОД ЧЕРЕЗ DISCORD (фронт-часть)
+    function loginDiscord() {
+      const clientId = "1441771387236032154";
+      const redirectUri = encodeURIComponent("https://knutoboyyy.github.io/knutoboyyy/callback.html");
+      const scope = "identify";
+      const responseType = "code";
+
+      const url = 
+        `https://discord.com/oauth2/authorize` +
+        `?client_id=${clientId}` +
+        `&redirect_uri=${redirectUri}` +
+        `&response_type=${responseType}` +
+        `&scope=${scope}`;
+
+      window.location.href = url;
+    }
+
+    // Обратный отсчёт до даты номинации (можешь поменять дату)
     const targetDate = new Date("2025-12-21T18:00:00+03:00").getTime();
 
     function updateCountdown() {
@@ -1627,7 +1383,7 @@
     }
 
     updateCountdown();
-    setInterval(updateCountdown, 30_000);
+    setInterval(updateCountdown, 30000);
   </script>
 </body>
 </html>
