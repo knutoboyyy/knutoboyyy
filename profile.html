@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Профиль · SLAY AWARDS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #050307;
+      --accent: #ff2746;
+      --accent2: #ff7a5c;
+      --text: #ffffff;
+      --muted: #9a96a5;
+      --font-main: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text","Inter", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      font-family: var(--font-main);
+      background:
+        radial-gradient(circle at top, #26050c 0, #050307 40%),
+        radial-gradient(circle at bottom, #150310 0, #050307 45%);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card {
+      max-width: 520px;
+      width: 100%;
+      margin: 16px;
+      padding: 22px 22px 20px;
+      border-radius: 24px;
+      background: radial-gradient(circle at top, #2b080f, #080307);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.85);
+      text-align: center;
+    }
+    h1 {
+      font-size: 20px;
+      margin: 0 0 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+    .subtitle {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+    .avatar {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.25);
+      box-shadow: 0 0 24px rgba(255,39,70,0.6);
+      object-fit: cover;
+      margin-bottom: 10px;
+    }
+    .username {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .id {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+    .info {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 18px;
+      line-height: 1.6;
+    }
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+    .btn {
+      padding: 9px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(8,2,6,0.9);
+      color: var(--text);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #ff2746, #ff7a5c);
+      color: #050307;
+      border-color: rgba(255,255,255,0.16);
+    }
+    a {
+      color: var(--accent2);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="card" id="card">
+    <h1>Профиль</h1>
+    <div class="subtitle">Данные авторизации через Discord</div>
+    <div id="content">Загрузка…</div>
+  </div>
+
+  <script>
+    const raw = localStorage.getItem("slayUser");
+    const contentEl = document.getElementById("content");
+
+    if (!raw) {
+      contentEl.innerHTML =
+        'Ты ещё не авторизован через Discord.<br><br>' +
+        '<div class="buttons">' +
+        '<button class="btn btn-primary" onclick="location.href=\'./index.html#login\'">Войти</button>' +
+        '<button class="btn" onclick="location.href=\'./index.html\'">На главную</button>' +
+        '</div>';
+    } else {
+      const user = JSON.parse(raw);
+      const avatarUrl = user.avatar
+        ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=128`
+        : "https://cdn.discordapp.com/embed/avatars/0.png";
+
+      contentEl.innerHTML = `
+        <img src="${avatarUrl}" alt="avatar" class="avatar">
+        <div class="username">${user.username}</div>
+        <div class="id">ID: ${user.id}</div>
+        <div class="info">
+          Отображаемое имя: <b>${user.global_name || "—"}</b><br>
+          Эти данные получены из твоего Discord-аккаунта через OAuth.
+        </div>
+        <div class="buttons">
+          <button class="btn btn-primary" onclick="location.href='./index.html'">На главную</button>
+          <button class="btn" onclick="logout()">Выйти</button>
+        </div>
+      `;
+    }
+
+    function logout() {
+      localStorage.removeItem("slayUser");
+      location.href = "./index.html";
+    }
+  </script>
+</body>
+</html>
