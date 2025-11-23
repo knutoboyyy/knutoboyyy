@@ -176,8 +176,6 @@
       display: none;
     }
 
-    /* USER MENU / AVATAR */
-
     .user-menu {
       position: relative;
       display: none;
@@ -229,8 +227,6 @@
       background: rgba(255, 255, 255, 0.06);
       color: var(--text);
     }
-
-    /* HERO */
 
     .hero {
       display: grid;
@@ -532,8 +528,6 @@
       height: 14px;
     }
 
-    /* SECTIONS */
-
     .section {
       margin-top: 64px;
     }
@@ -557,8 +551,6 @@
       color: var(--muted);
       max-width: 420px;
     }
-
-    /* ABOUT */
 
     .story-grid {
       display: grid;
@@ -613,8 +605,6 @@
       text-transform: uppercase;
       letter-spacing: 0.14em;
     }
-
-    /* NOMINATIONS */
 
     .nominations-grid {
       display: grid;
@@ -708,8 +698,6 @@
       color: #fff;
     }
 
-    /* FAQ */
-
     .faq-list {
       border-radius: var(--radius-lg);
       border: 1px solid var(--border);
@@ -773,8 +761,6 @@
       background: rgba(255, 255, 255, 0.08);
       color: #fff;
     }
-
-    /* FOOTER */
 
     .footer {
       margin-top: 56px;
@@ -849,8 +835,6 @@
         flex-direction: column;
       }
     }
-
-    /* MODALS */
 
     .modal-backdrop {
       position: fixed;
@@ -1311,7 +1295,7 @@
           </div>
         </article>
 
-        <!-- Объединённая номинация Геймер года вместо CS2/Dota2 -->
+        <!-- Объединённая номинация Геймер года -->
         <article class="nom-card">
           <div class="nom-overlay-glow"></div>
           <div class="nom-tag">Игры</div>
@@ -1702,18 +1686,15 @@
 
     const SERVER_USERS = [...SERVER_GIRLS, ...SERVER_BOYS];
 
-    // номинации без автодополнения
     const NO_SUGGEST_CATEGORIES = [
       "Фрик года",
       "Трек года",
       "Проект года"
     ];
 
-    // пул ников по категориям
     const CATEGORY_POOLS = {
       "SLAY KING": SERVER_BOYS,
       "SLAY QUEEN": SERVER_GIRLS
-      // остальные — все
     };
 
     function getPoolForCategory(category) {
@@ -1724,9 +1705,9 @@
     function filterUsers(query, pool) {
       if (!query) return [];
       const q = query.toLowerCase();
-      return pool.filter((name) =>
-        name.toLowerCase().startsWith(q)
-      ).slice(0, 12);
+      return pool
+        .filter((name) => name.toLowerCase().startsWith(q))
+        .slice(0, 12);
     }
 
     function bindSuggestions(input) {
@@ -1737,7 +1718,7 @@
 
       input.addEventListener("input", () => {
         const val = input.value.trim();
-        const category = window.currentCategory;
+        const category = currentCategory; // <--- фикс тут
         const useSuggest =
           category &&
           !NO_SUGGEST_CATEGORIES.includes(category);
@@ -1845,13 +1826,11 @@
 
       const key = currentCategory || "unknown";
 
-      // локальное хранилище: можно менять голос
       const all = JSON.parse(localStorage.getItem("slayVotes") || "{}");
       const oldVote = all[key] || null;
       all[key] = nick;
       localStorage.setItem("slayVotes", JSON.stringify(all));
 
-      // инфа о пользователе
       const userRaw = localStorage.getItem("slayUser");
       let userInfo = {};
       try {
