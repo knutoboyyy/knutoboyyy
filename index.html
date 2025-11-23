@@ -1271,7 +1271,7 @@
             мемная пара или просто самые заметные вместе.
           </div>
           <div class="nom-foot">
-            <div>Укажи обоих через запятую</div>
+            <div>Выбери двоих людей</div>
             <div class="nom-actions">
               <button class="primary" onclick="openVote('Пара года')">Голосовать</button>
             </div>
@@ -1323,6 +1323,22 @@
             <div>Можешь описать или указать ник</div>
             <div class="nom-actions">
               <button class="primary" onclick="openVote('Мем года')">Голосовать</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Трек года -->
+        <article class="nom-card">
+          <div class="nom-overlay-glow"></div>
+          <div class="nom-tag">Музыка</div>
+          <div class="nom-title">Трек года</div>
+          <div class="nom-desc">
+            Любой трек, который ассоциируется с сервером: мемный звук, трек участника или просто песня года.
+          </div>
+          <div class="nom-foot">
+            <div>Можно вписать любой трек</div>
+            <div class="nom-actions">
+              <button class="primary" onclick="openVote('Трек года')">Голосовать</button>
             </div>
           </div>
         </article>
@@ -1499,7 +1515,15 @@
           type="text"
           placeholder="Начни вводить ник — выбери из списка"
         />
+        <input
+          id="vote-input-2"
+          class="vote-input"
+          type="text"
+          placeholder="Второй участник пары (для «Пара года»)"
+          style="display:none; margin-top:8px;"
+        />
         <div id="suggestions" class="suggest-box"></div>
+        <div id="suggestions-2" class="suggest-box"></div>
         <div class="vote-hint" id="vote-hint">
           Ник должен совпадать с тем, как человек указан на сервере. Список ниже — из заранее добавленных ников.
           Свой голос можно изменить.
@@ -1710,58 +1734,56 @@
         .slice(0, 12);
     }
 
-    
-function bindSuggestions(input) {
-  const box = document.getElementById("suggestions");
-  if (!box || !input) return;
-  if (input.dataset.suggestBound === "1") return;
-  input.dataset.suggestBound = "1";
+    function bindSuggestions(input, boxId) {
+      const box = document.getElementById(boxId || "suggestions");
+      if (!box || !input) return;
+      if (input.dataset.suggestBound === "1") return;
+      input.dataset.suggestBound = "1";
 
-  input.addEventListener("input", () => {
-    const val = input.value.trim();
-    const category = currentCategory; // без window
-    const useSuggest =
-      category &&
-      !NO_SUGGEST_CATEGORIES.includes(category);
+      input.addEventListener("input", () => {
+        const val = input.value.trim();
+        const category = currentCategory;
+        const useSuggest =
+          category &&
+          !NO_SUGGEST_CATEGORIES.includes(category);
 
-    // для категорий без автодополнения — сразу скрываем бокс
-    if (!useSuggest) {
-      box.style.display = "none";
-      box.innerHTML = "";
-      return;
+        if (!useSuggest) {
+          box.style.display = "none";
+          box.innerHTML = "";
+          return;
+        }
+
+        const pool = getPoolForCategory(category);
+        const list = filterUsers(val, pool);
+
+        box.innerHTML = "";
+        if (!val || list.length === 0) {
+          box.style.display = "none";
+          return;
+        }
+
+        list.forEach((name) => {
+          const div = document.createElement("div");
+          div.className = "suggest-item";
+          div.textContent = name;
+          div.onclick = () => {
+            input.value = name;
+            box.style.display = "none";
+          };
+          box.appendChild(div);
+        });
+
+        box.style.display = "block";
+      });
+
+      document.addEventListener("click", (e) => {
+        if (!box.contains(e.target) && e.target !== input) {
+          box.style.display = "none";
+        }
+      });
     }
 
-    const pool = getPoolForCategory(category);
-    const list = filterUsers(val, pool);
-
-    box.innerHTML = "";
-    if (!val || list.length === 0) {
-      box.style.display = "none";
-      return;
-    }
-
-    list.forEach((name) => {
-      const div = document.createElement("div");
-      div.className = "suggest-item";
-      div.textContent = name;
-      div.onclick = () => {
-        input.value = name;
-        box.style.display = "none";
-      };
-      box.appendChild(div);
-    });
-
-    box.style.display = "block";
-  });
-
-  document.addEventListener("click", (e) => {
-    if (!box.contains(e.target) && e.target !== input) {
-      box.style.display = "none";
-    }
-  });
-}
-
-let currentCategory = null;
+    let currentCategory = null;
 
     function openVote(category) {
       const rawUser = localStorage.getItem("slayUser");
@@ -1773,8 +1795,10 @@ let currentCategory = null;
       currentCategory = category;
       const titleEl = document.getElementById("vote-modal-title");
       const catLabel = document.getElementById("vote-category-label");
-      const input = document.getElementById("vote-input");
-      const box = document.getElementById("suggestions");
+      const input1 = document.getElementById("vote-input");
+      const input2 = document.getElementById("vote-input-2");
+      const box1 = document.getElementById("suggestions");
+      const box2 = document.getElementById("suggestions-2");
       const hintEl = document.getElementById("vote-hint");
 
       const allVotes = JSON.parse(localStorage.getItem("slayVotes") || "{}");
@@ -1782,58 +1806,144 @@ let currentCategory = null;
 
       const useSuggest = !NO_SUGGEST_CATEGORIES.includes(category);
 
+      let prev1 = previous;
+      let prev2 = "";
+      if (category === "Пара года" && previous) {
+        const parts = previous.split(",").map(s => s.trim()).filter(Boolean);
+        prev1 = parts[0] || "";
+        prev2 = parts[1] || "";
+      }
+
       if (titleEl) titleEl.textContent = "Голосование · " + category;
       if (catLabel) catLabel.textContent = "Номинация: " + category;
 
-      if (input) {
-        input.value = previous;
-        input.placeholder = useSuggest
-          ? "Начни вводить ник — выбери из списка"
-          : "Впиши ник / описание вручную";
+      if (input1) {
+        input1.value = (category === "Пара года") ? prev1 : previous;
+        if (!useSuggest) {
+          if (category === "Трек года") {
+            input1.placeholder = "Впиши название трека, исполнителя или ссылку";
+          } else {
+            input1.placeholder = "Впиши ник / описание вручную";
+          }
+        } else {
+          input1.placeholder = "Начни вводить ник — выбери из списка";
+        }
       }
 
-      if (box) {
-        box.innerHTML = "";
-        box.style.display = "none";
+      if (input2) {
+        if (category === "Пара года") {
+          input2.style.display = "block";
+          input2.value = prev2;
+        } else {
+          input2.style.display = "none";
+          input2.value = "";
+        }
+      }
+
+      if (box1) {
+        box1.innerHTML = "";
+        box1.style.display = "none";
+      }
+      if (box2) {
+        box2.innerHTML = "";
+        box2.style.display = "none";
       }
 
       if (hintEl) {
-        if (useSuggest) {
+        if (category === "Трек года") {
+          hintEl.textContent =
+            "Сюда можно вписать любой трек: название, исполнителя или ссылку. Автодополнения нет.";
+        } else if (!useSuggest) {
+          hintEl.textContent =
+            "Для этой номинации автодополнения нет — просто впиши ник, пару ников или описание. Свой голос можно поменять позже.";
+        } else {
           if (category === "SLAY KING") {
             hintEl.textContent =
               "Эта номинация только по парням сервера. Начни вводить ник — выбери из подсказок. Свой голос можно изменить.";
           } else if (category === "SLAY QUEEN") {
             hintEl.textContent =
               "Эта номинация только по девочкам сервера. Начни вводить ник — выбери из подсказок. Свой голос можно изменить.";
+          } else if (category === "Пара года") {
+            hintEl.textContent =
+              "Укажи двух людей с сервера. Оба ника нужно выбрать из подсказок. Свой голос можно изменить.";
           } else {
             hintEl.textContent =
-              "Ник должен совпадать с тем, как человек указан на сервере. Список ниже — из заранее добавленных ников. Свой голос можно изменить.";
+              "Ник должен совпадать с тем, как человек указан на сервере. Выбирай из подсказок. Свой голос можно изменить.";
           }
-        } else {
-          hintEl.textContent =
-            "Для этой номинации автодополнения нет — просто впиши ник, пару ников или описание. Свой голос можно поменять позже.";
         }
       }
 
-      bindSuggestions(input);
+      bindSuggestions(input1, "suggestions");
+      if (category === "Пара года" && input2) {
+        bindSuggestions(input2, "suggestions-2");
+      }
+
       openModal("vote-modal");
     }
 
     function submitVote() {
-      const input = document.getElementById("vote-input");
-      if (!input) return;
+      const input1 = document.getElementById("vote-input");
+      const input2 = document.getElementById("vote-input-2");
+      if (!input1) return;
 
-      const nick = input.value.trim();
-      if (!nick) {
-        alert("Впиши вариант или выбери ник из списка.");
-        return;
+      const category = currentCategory || "unknown";
+
+      let nickValue = "";
+      const useSuggest = !NO_SUGGEST_CATEGORIES.includes(category);
+
+      if (category === "Пара года") {
+        const nick1 = input1.value.trim();
+if (category === "Пара года") {
+  const nick1 = input1.value.trim();
+  const nick2 = (input2 && input2.style.display !== "none") ? input2.value.trim() : "";
+
+  if (!nick1 || !nick2) {
+    alert("Для номинации «Пара года» укажи двух людей.");
+    return;
+  }
+
+  // 🚫 запрет одинаковых людей
+  if (nick1 === nick2) {
+    alert("Для номинации «Пара года» нужно выбрать двух РАЗНЫХ людей.");
+    return;
+  }
+
+  if (useSuggest) {
+    const pool = getPoolForCategory(category);
+    if (!pool.includes(nick1) || !pool.includes(nick2)) {
+      alert("Для номинации «Пара года» нужно выбрать обоих участников из списка подсказок.");
+      return;
+    }
+  }
+
+  nickValue = nick1 + ", " + nick2;
+} else {
+        const nick = input1.value.trim();
+        if (!nick) {
+          if (category === "Трек года") {
+            alert("Впиши название трека, исполнителя или ссылку.");
+          } else {
+            alert("Впиши вариант или выбери ник из списка.");
+          }
+          return;
+        }
+
+        if (useSuggest) {
+          const pool = getPoolForCategory(category);
+          if (!pool.includes(nick)) {
+            alert("Для этой номинации нужно выбрать ник из списка подсказок.");
+            return;
+          }
+        }
+
+        nickValue = nick;
       }
 
-      const key = currentCategory || "unknown";
+      const key = category;
 
       const all = JSON.parse(localStorage.getItem("slayVotes") || "{}");
       const oldVote = all[key] || null;
-      all[key] = nick;
+      all[key] = nickValue;
       localStorage.setItem("slayVotes", JSON.stringify(all));
 
       const userRaw = localStorage.getItem("slayUser");
@@ -1852,19 +1962,19 @@ let currentCategory = null;
       const webhookUrl = "https://discord.com/api/webhooks/1441799211724181604/sUtxo4zwFt7R2vKF6VAYmtdkpxXpspXOK0MRee4D-zkemhYYmidCS7Sszjlm5x7I0fJb";
 
       const lines = [];
-      if (oldVote && oldVote !== nick) {
+      if (oldVote && oldVote !== nickValue) {
         lines.push("♻️ **Изменён голос**");
         lines.push(`**Номинация:** ${key}`);
         lines.push(`**Было:** ${oldVote}`);
-        lines.push(`**Стало:** ${nick}`);
-      } else if (oldVote === nick) {
+        lines.push(`**Стало:** ${nickValue}`);
+      } else if (oldVote === nickValue) {
         lines.push("🔁 **Повторное подтверждение голоса**");
         lines.push(`**Номинация:** ${key}`);
-        lines.push(`**За:** ${nick}`);
+        lines.push(`**За:** ${nickValue}`);
       } else {
         lines.push("📥 **Новый голос**");
         lines.push(`**Номинация:** ${key}`);
-        lines.push(`**За:** ${nick}`);
+        lines.push(`**За:** ${nickValue}`);
       }
       lines.push("");
       lines.push(`**Пользователь:** ${username} (${userId})`);
@@ -1882,10 +1992,10 @@ let currentCategory = null;
         console.error("Ошибка отправки голоса в Discord webhook:", e);
       }
 
-      if (oldVote && oldVote !== nick) {
-        alert(`Голос в номинации "${key}" изменён: было "${oldVote}", теперь "${nick}".`);
+      if (oldVote && oldVote !== nickValue) {
+        alert(`Голос в номинации "${key}" изменён: было "${oldVote}", теперь "${nickValue}".`);
       } else {
-        alert(`Голос за "${nick}" в номинации "${key}" принят!`);
+        alert(`Голос за "${nickValue}" в номинации "${key}" принят!`);
       }
       closeModal("vote-modal");
     }
@@ -1911,5 +2021,3 @@ let currentCategory = null;
   </script>
 </body>
 </html>
-
-
