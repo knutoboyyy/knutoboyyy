@@ -155,7 +155,6 @@
       height: 14px;
     }
 
-    /* новая кнопка Discord в хедере */
     .nav-discord {
       padding: 7px 14px;
       border-radius: 999px;
@@ -335,15 +334,14 @@
       color: var(--muted);
     }
 
-    /* заметная кнопка доната */
     .btn-donate {
       border-color: rgba(255, 39, 70, 0.9);
-      background: radial-gradient(circle at 0 0, rgba(255, 39, 70, 0.3), transparent 55%);
+      background: radial-gradient(circle at 0 0, rgba(255, 39, 70, 0.35), transparent 55%);
       color: #ffb3c4;
-      box-shadow: 0 0 26px rgba(255, 39, 70, 0.8);
+      box-shadow: 0 0 26px rgba(255, 39, 70, 0.85);
     }
     .btn-donate:hover {
-      background: radial-gradient(circle at 0 0, rgba(255, 39, 70, 0.5), transparent 60%);
+      background: radial-gradient(circle at 0 0, rgba(255, 39, 70, 0.6), transparent 60%);
       color: #ffffff;
     }
 
@@ -823,7 +821,6 @@
       border-bottom: 1px dashed rgba(255, 255, 255, 0.3);
     }
 
-    /* заметная ссылка доната */
     .footer-donate {
       padding: 4px 10px;
       border-radius: 999px;
@@ -972,6 +969,28 @@
       margin-top: 6px;
     }
 
+    .suggest-box {
+      margin-top: 6px;
+      border-radius: 10px;
+      background: rgba(5, 1, 4, 0.97);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      max-height: 160px;
+      overflow-y: auto;
+      font-size: 13px;
+      display: none;
+    }
+
+    .suggest-item {
+      padding: 6px 10px;
+      cursor: pointer;
+      color: var(--muted);
+    }
+
+    .suggest-item:hover {
+      background: rgba(255, 255, 255, 0.06);
+      color: #ffffff;
+    }
+
     @media (max-width: 720px) {
       .header {
         border-radius: 18px;
@@ -1026,12 +1045,10 @@
         <a href="#faq">FAQ</a>
         <a href="#stream">Трансляция</a>
 
-        <!-- новая кнопка на сервер -->
         <a href="https://discord.gg/NX2JjE7abg" target="_blank" rel="noreferrer" class="nav-discord">
           НАШ ДИСКОРД СЕРВЕР
         </a>
 
-        <!-- Кнопка логина -->
         <a id="login-btn" class="nav-cta" href="#vote" onclick="openModal('auth-modal'); return false;">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M12 3l4 4-4 4M16 7H4m8 10v-2m0 6a9 9 0 100-18 9 9 0 000 18z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
@@ -1039,7 +1056,6 @@
           <span>Войти Discord</span>
         </a>
 
-        <!-- Меню пользователя -->
         <div id="user-menu" class="user-menu">
           <img id="user-avatar" class="user-avatar" src="" alt="avatar" />
           <div class="user-menu-dropdown">
@@ -1086,7 +1102,6 @@
             <span>Смотреть стрим</span>
           </a>
 
-          <!-- заметная кнопка доната -->
           <a href="https://donatello.to/knutoboyyy" target="_blank" rel="noreferrer" class="btn btn-donate">
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M12 21s-6-4.35-9-9A5 5 0 0112 5a5 5 0 019 7c-3 4.65-9 9-9 9z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
@@ -1241,7 +1256,7 @@
             Девушка сервера, которая тащит атмосферу, чат и настроения всех вокруг.
           </div>
           <div class="nom-foot">
-            <div>Один голос в сутки</div>
+            <div>Один голос на пользователя</div>
             <div class="nom-actions">
               <button class="primary" onclick="openVote('SLAY QUEEN')">Голосовать</button>
             </div>
@@ -1263,7 +1278,6 @@
           </div>
         </article>
 
-        <!-- ПАРА ГОДА -->
         <article class="nom-card">
           <div class="nom-overlay-glow"></div>
           <div class="nom-tag">Персона</div>
@@ -1280,7 +1294,6 @@
           </div>
         </article>
 
-        <!-- АНИМЕШНИК ГОДА -->
         <article class="nom-card">
           <div class="nom-overlay-glow"></div>
           <div class="nom-tag">Стиль</div>
@@ -1350,29 +1363,13 @@
             Фраза, картинка или момент, который остался внутри сервера навсегда.
           </div>
           <div class="nom-foot">
-            <div>Прикрепляй скрины/клипы (позже)</div>
+            <div>Можешь описать или указать ник</div>
             <div class="nom-actions">
               <button class="primary" onclick="openVote('Мем года')">Голосовать</button>
             </div>
           </div>
         </article>
 
-        <article class="nom-card">
-          <div class="nom-overlay-glow"></div>
-          <div class="nom-tag">Музыка</div>
-          <div class="nom-title">Трек года</div>
-          <div class="nom-desc">
-            Песня, под которую жили войсы, мемили и делали хайлайты.
-          </div>
-          <div class="nom-foot">
-            <div>Нужна ссылка на трек</div>
-            <div class="nom-actions">
-              <button class="primary" onclick="openVote('Трек года')">Голосовать</button>
-            </div>
-          </div>
-        </article>
-
-        <!-- НОВАЯ НОМИНАЦИЯ: ПРОЕКТ ГОДА -->
         <article class="nom-card">
           <div class="nom-overlay-glow"></div>
           <div class="nom-tag">Движ</div>
@@ -1391,16 +1388,16 @@
 
         <article class="nom-card">
           <div class="nom-overlay-glow"></div>
-          <div class="nom-tag">Событие</div>
-          <div class="nom-title">Событие года</div>
+          <div class="nom-tag">Персона</div>
+          <div class="nom-title">Фрик года</div>
           <div class="nom-desc">
-            Турнир, совместный просмотр, рейд, марафон — любой момент, который
-            стал историей сервера.
+            Самый странный, кринжовый, но при этом легендарный персонаж сервера,
+            без которого атмосфера уже не та.
           </div>
           <div class="nom-foot">
-            <div>Прикрепи инфу/клип</div>
+            <div>Опиши или укажи ник</div>
             <div class="nom-actions">
-              <button class="primary" onclick="openVote('Событие года')">Голосовать</button>
+              <button class="primary" onclick="openVote('Фрик года')">Голосовать</button>
             </div>
           </div>
         </article>
@@ -1529,8 +1526,6 @@
     </div>
   </div>
 
-  <!-- МОДАЛКА ГОЛОСОВАНИЯ -->
-
   <div class="modal-backdrop" id="vote-modal">
     <div class="modal">
       <div class="modal-header">
@@ -1545,11 +1540,12 @@
           id="vote-input"
           class="vote-input"
           type="text"
-          placeholder="Впиши никнейм человека с сервера"
+          placeholder="Начни вводить ник — выбери из списка"
         />
-        <div class="vote-hint">
-          Ник должен совпадать с тем, как человек указан на сервере. Позже это можно
-          будет сверить модерацией.
+        <div id="suggestions" class="suggest-box"></div>
+        <div class="vote-hint" id="vote-hint">
+          Ник должен совпадать с тем, как человек указан на сервере. Список ниже — из заранее добавленных ников.
+          Свой голос можно изменить.
         </div>
         <div class="modal-actions" style="margin-top:12px;">
           <button class="btn btn-primary" onclick="submitVote()">Отправить голос</button>
@@ -1582,7 +1578,6 @@
       if (!open) item.classList.add("open");
     }
 
-    // DISCORD AUTH (implicit)
     function loginDiscord() {
       const clientId = "1441771387823063154";
       const redirectUri = encodeURIComponent("https://knutoboyyy.github.io/knutoboyyy/callback.html");
@@ -1598,7 +1593,6 @@
       window.location.href = url;
     }
 
-    // USER MENU INIT
     (function initUserMenu() {
       const raw = localStorage.getItem("slayUser");
       if (!raw) return;
@@ -1647,21 +1641,173 @@
       }
     })();
 
-    // VOTING LOGIC
+    // ---------- СПИСКИ ЛЮДЕЙ (НИКИ НЕ МЕНЯЕМ) ----------
+    const SERVER_GIRLS = [
+      "lerysikdota2pro2007",
+      "Ликма Болz",
+      "dia",
+      "Dimka",
+      "Klyukva",
+      "lukulda",
+      "nikaxqw",
+      "miwakssi",
+      "wenamechainasama",
+      "yynak",
+      "chivelisavn",
+      "arisha024",
+      "vasilisa07626",
+      "annsps",
+      "lilyusiikk",
+      "ans_kh",
+      "Утя",
+      "kseniayurx"
+    ];
+
+    const SERVER_BOYS = [
+      "k сиськастий",
+      "Capitanchick",
+      "knutoboyyy",
+      "Статус Альфа",
+      "ability.",
+      "ALR0",
+      "B1t9L3b",
+      "KustickSIGMA",
+      "m1sha 234",
+      "Marl",
+      "Sraymur",
+      "АЛИШхулиПАЛИШЬ",
+      "завтра супный день",
+      "Тимон Чигур",
+      "skar1x",
+      "! Ядерная Бомбардировка",
+      "30tir",
+      "arsenold777",
+      "ashntu",
+      "Bionit",
+      "blinkyextra",
+      "broski_jambo",
+      "Brrr",
+      "Dibil",
+      "dyrachyo",
+      "famtomikss",
+      "foksi_limonad",
+      "gl1boy",
+      "ivashco91",
+      "Jam1boy(олег)",
+      "Jean Pierre Jean Jaque",
+      "киллик",
+      "KUT_V_KEDAX2011",
+      "KEC",
+      "kokyshka",
+      "Kyogre",
+      "mesiaf",
+      "mikkillangelloo",
+      "n1pxzz",
+      "nocup404",
+      "pablo escobar",
+      "taburetka",
+      "what happened?",
+      "WhyNot",
+      "армателло",
+      "Везунчик",
+      "Vo_Bes",
+      "Balbesik",
+      "золотой сын",
+      "илька",
+      "Карасик ",
+      "Кмс по шибари",
+      "Макс",
+      "Максим доил жирафа",
+      "Hoodiny",
+      "Morbid",
+      "Мухамед Энштейн",
+      "Наполнен болью",
+      "Шамшод",
+      "ярик234",
+      "daytona"
+    ];
+
+    const SERVER_USERS = [...SERVER_GIRLS, ...SERVER_BOYS];
+
+    // номинации без автодополнения
+    const NO_SUGGEST_CATEGORIES = [
+      "Фрик года",
+      "Трек года",
+      "Проект года"
+    ];
+
+    // пул ников по категориям
+    const CATEGORY_POOLS = {
+      "SLAY KING": SERVER_BOYS,
+      "SLAY QUEEN": SERVER_GIRLS
+      // остальные — все
+    };
+
+    function getPoolForCategory(category) {
+      if (!category) return SERVER_USERS;
+      return CATEGORY_POOLS[category] || SERVER_USERS;
+    }
+
+    function filterUsers(query, pool) {
+      if (!query) return [];
+      const q = query.toLowerCase();
+      return pool.filter((name) =>
+        name.toLowerCase().startsWith(q)
+      ).slice(0, 12);
+    }
+
+    function bindSuggestions(input) {
+      const box = document.getElementById("suggestions");
+      if (!box || !input) return;
+      if (input.dataset.suggestBound === "1") return;
+      input.dataset.suggestBound = "1";
+
+      input.addEventListener("input", () => {
+        const val = input.value.trim();
+        const category = window.currentCategory;
+        const useSuggest =
+          category &&
+          !NO_SUGGEST_CATEGORIES.includes(category);
+
+        if (!useSuggest) {
+          box.style.display = "none";
+          box.innerHTML = "";
+          return;
+        }
+
+        const pool = getPoolForCategory(category);
+        const list = filterUsers(val, pool);
+        box.innerHTML = "";
+        if (!val || list.length === 0) {
+          box.style.display = "none";
+          return;
+        }
+        list.forEach((name) => {
+          const div = document.createElement("div");
+          div.className = "suggest-item";
+          div.textContent = name;
+          div.onclick = () => {
+            input.value = name;
+            box.style.display = "none";
+          };
+          box.appendChild(div);
+        });
+        box.style.display = "block";
+      });
+
+      document.addEventListener("click", (e) => {
+        if (!box.contains(e.target) && e.target !== input) {
+          box.style.display = "none";
+        }
+      });
+    }
+
     let currentCategory = null;
 
     function openVote(category) {
       const rawUser = localStorage.getItem("slayUser");
       if (!rawUser) {
-        // не залогинен — сначала авторизация
         openModal("auth-modal");
-        return;
-      }
-
-      // проверяем, голосовал ли уже в этой номинации
-      const allVotes = JSON.parse(localStorage.getItem("slayVotes") || "{}");
-      if (allVotes[category]) {
-        alert(`Ты уже голосовал в номинации "${category}" за "${allVotes[category]}".`);
         return;
       }
 
@@ -1669,11 +1815,48 @@
       const titleEl = document.getElementById("vote-modal-title");
       const catLabel = document.getElementById("vote-category-label");
       const input = document.getElementById("vote-input");
+      const box = document.getElementById("suggestions");
+      const hintEl = document.getElementById("vote-hint");
+
+      const allVotes = JSON.parse(localStorage.getItem("slayVotes") || "{}");
+      const previous = allVotes[category] || "";
+
+      const useSuggest = !NO_SUGGEST_CATEGORIES.includes(category);
 
       if (titleEl) titleEl.textContent = "Голосование · " + category;
       if (catLabel) catLabel.textContent = "Номинация: " + category;
-      if (input) input.value = "";
 
+      if (input) {
+        input.value = previous;
+        input.placeholder = useSuggest
+          ? "Начни вводить ник — выбери из списка"
+          : "Впиши ник / описание вручную";
+      }
+
+      if (box) {
+        box.innerHTML = "";
+        box.style.display = "none";
+      }
+
+      if (hintEl) {
+        if (useSuggest) {
+          if (category === "SLAY KING") {
+            hintEl.textContent =
+              "Эта номинация только по парням сервера. Начни вводить ник — выбери из подсказок. Свой голос можно изменить.";
+          } else if (category === "SLAY QUEEN") {
+            hintEl.textContent =
+              "Эта номинация только по девочкам сервера. Начни вводить ник — выбери из подсказок. Свой голос можно изменить.";
+          } else {
+            hintEl.textContent =
+              "Ник должен совпадать с тем, как человек указан на сервере. Список ниже — из заранее добавленных ников. Свой голос можно изменить.";
+          }
+        } else {
+          hintEl.textContent =
+            "Для этой номинации автодополнения нет — просто впиши ник, пару ников или описание. Свой голос можно поменять позже.";
+        }
+      }
+
+      bindSuggestions(input);
       openModal("vote-modal");
     }
 
@@ -1683,23 +1866,19 @@
 
       const nick = input.value.trim();
       if (!nick) {
-        alert("Впиши никнейм человека.");
+        alert("Впиши вариант или выбери ник из списка.");
         return;
       }
 
       const key = currentCategory || "unknown";
 
-      // 1. проверяем и записываем в localStorage (1 голос на номинацию)
+      // локальное хранилище: можно менять голос
       const all = JSON.parse(localStorage.getItem("slayVotes") || "{}");
-      if (all[key]) {
-        alert(`Ты уже голосовал в номинации "${key}" за "${all[key]}".`);
-        closeModal("vote-modal");
-        return;
-      }
+      const oldVote = all[key] || null;
       all[key] = nick;
       localStorage.setItem("slayVotes", JSON.stringify(all));
 
-      // 2. Данные пользователя из Discord
+      // инфа о пользователе
       const userRaw = localStorage.getItem("slayUser");
       let userInfo = {};
       try {
@@ -1713,19 +1892,28 @@
 
       const userId = userInfo.id || "unknown-id";
 
-      // 3. Webhook (голоса прилетают в приватный канал)
       const webhookUrl = "https://discord.com/api/webhooks/1441799211724181604/sUtxo4zwFt7R2vKF6VAYmtdkpxXpspXOK0MRee4D-zkemhYYmidCS7Sszjlm5x7I0fJb";
 
-      const payload = {
-        content: [
-          "📥 **Новый голос**",
-          `**Номинация:** ${key}`,
-          `**За:** ${nick}`,
-          "",
-          `**Пользователь:** ${username} (${userId})`,
-          "────────────"
-        ].join("\n")
-      };
+      const lines = [];
+      if (oldVote && oldVote !== nick) {
+        lines.push("♻️ **Изменён голос**");
+        lines.push(`**Номинация:** ${key}`);
+        lines.push(`**Было:** ${oldVote}`);
+        lines.push(`**Стало:** ${nick}`);
+      } else if (oldVote === nick) {
+        lines.push("🔁 **Повторное подтверждение голоса**");
+        lines.push(`**Номинация:** ${key}`);
+        lines.push(`**За:** ${nick}`);
+      } else {
+        lines.push("📥 **Новый голос**");
+        lines.push(`**Номинация:** ${key}`);
+        lines.push(`**За:** ${nick}`);
+      }
+      lines.push("");
+      lines.push(`**Пользователь:** ${username} (${userId})`);
+      lines.push("────────────");
+
+      const payload = { content: lines.join("\n") };
 
       try {
         fetch(webhookUrl, {
@@ -1737,11 +1925,14 @@
         console.error("Ошибка отправки голоса в Discord webhook:", e);
       }
 
-      alert(`Голос за "${nick}" в номинации "${key}" принят!`);
+      if (oldVote && oldVote !== nick) {
+        alert(`Голос в номинации "${key}" изменён: было "${oldVote}", теперь "${nick}".`);
+      } else {
+        alert(`Голос за "${nick}" в номинации "${key}" принят!`);
+      }
       closeModal("vote-modal");
     }
 
-    // COUNTDOWN
     const targetDate = new Date("2025-12-21T18:00:00+03:00").getTime();
 
     function updateCountdown() {
