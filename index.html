@@ -1096,7 +1096,7 @@
 
         <div class="hero-meta">
           <div class="meta-pill">Для людей с Discord сервера</div>
-          <div class="meta-pill">Чат и голоса решают исход</div>
+          <div class="meta-pill">Чат и голоса решали исход</div>
         </div>
 
         <div class="hero-partners">
@@ -1210,8 +1210,8 @@
         <div>
           <h2 class="section-title">Номинации</h2>
           <p class="section-sub">
-            После входа через Discord ты сможешь голосовать за людей с сервера
-            в каждой из этих категорий.
+            Голосование завершено. Встретимся на стриме <strong>05.12.2025 в 19:30</strong> по Киеву,
+            чтобы узнать, кто стал легендой этого сезона.
           </p>
         </div>
       </div>
@@ -1472,7 +1472,7 @@
       <div class="modal-body">
         Добавь стрим в календарь, чтобы не пропустить церемонию.
         <div class="modal-actions">
-          <button class="btn btn-primary" onclick="alert('Сюда потом можно поставить ссылку на календарь с датой стрима')">
+          <button class="btn btn-primary" onclick="alert('Сюда потом можно поставить ссылку на календарь с датой стрима 05.12.2025 19:30')">
             Добавить в календарь
           </button>
           <button class="btn btn-secondary" onclick="closeModal('remind-modal')">Потом</button>
@@ -1519,6 +1519,9 @@
   </div>
 
   <script>
+    // Флаг: голосование закрыто
+    const VOTING_CLOSED = true;
+
     function toggleMobileNav() {
       const header = document.querySelector(".header");
       header.classList.toggle("nav-mobile-open");
@@ -1542,6 +1545,11 @@
     }
 
     function loginDiscord() {
+      if (VOTING_CLOSED) {
+        alert("Голосование уже завершено. Ждём стрим 05.12.2025 в 19:30.");
+        return;
+      }
+
       const clientId = "1441771387823063154";
       const redirectUri = encodeURIComponent("https://knutoboyyy.github.io/knutoboyyy/callback.html");
       const scope = "identify";
@@ -1768,6 +1776,11 @@
     let currentCategory = null;
 
     function openVote(category) {
+      if (VOTING_CLOSED) {
+        alert("Голосование уже завершено. Ждём стрим 05.12.2025 в 19:30.");
+        return;
+      }
+
       const rawUser = localStorage.getItem("slayUser");
       if (!rawUser) {
         openModal("auth-modal");
@@ -1872,6 +1885,12 @@
     }
 
     function submitVote() {
+      if (VOTING_CLOSED) {
+        alert("Голосование уже завершено и голоса больше не принимаются.");
+        closeModal("vote-modal");
+        return;
+      }
+
       const input1 = document.getElementById("vote-input");
       const input2 = document.getElementById("vote-input-2");
       if (!input1) return;
@@ -1951,7 +1970,6 @@
 
       const userId = userInfo.id || "unknown-id";
 
-      // 🔁 НОВЫЙ ВЕБХУК
       const webhookUrl = "https://discord.com/api/webhooks/1442969785238290503/-ZRVhFaaYNr0JzQUakYf2njLmUHz-1VRLEw6ohldO_mpPd_NU8AAZQwor38Nq-RGNuyy";
 
       const lines = [];
@@ -1993,7 +2011,8 @@
       closeModal("vote-modal");
     }
 
-    const targetDate = new Date("2025-12-21T18:00:00+03:00").getTime();
+    // Новая дата стрима: 05.12.2025 19:30 (локальное время браузера)
+    const targetDate = new Date("2025-12-05T19:30:00").getTime();
 
     function updateCountdown() {
       const now = Date.now();
